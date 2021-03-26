@@ -1,17 +1,13 @@
 package controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import model.MaterialDTO;
 
 import model.ReplyMaterialDTO;
 
 public class ReplyMaterialController {
     private ArrayList<ReplyMaterialDTO> list;
     private int id;
-
-    private MaterialDTO m;
 
     public ReplyMaterialController() {
         id = 1;

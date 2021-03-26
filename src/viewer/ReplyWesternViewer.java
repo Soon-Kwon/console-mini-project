@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 import controller.ReplyWesternController;
 
-import model.ReplyMaterialDTO;
 import model.ReplyWesternDTO;
 import model.WesternDTO;
 import util.ScannerUtil;

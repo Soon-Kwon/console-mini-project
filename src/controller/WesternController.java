@@ -2,15 +2,11 @@ package controller;
 
 import java.util.ArrayList;
 
-import model.MaterialDTO;
-import model.OrientalDTO;
 import model.WesternDTO;
 public class WesternController {
     private ArrayList<WesternDTO> list;
     private int id;
-    private String name;
-    private int calori;
-    
+
     public WesternController() {
         // 객체생성
         

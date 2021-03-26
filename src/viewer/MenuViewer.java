@@ -25,16 +25,16 @@ public class MenuViewer {
         while (true) {
             SimpleDateFormat sdf = new SimpleDateFormat();
             ArrayList<MenuDTO> list = controller.selectByStoreId(s.getStoreId());
-            System.out.println("========================메뉴=========================");
+
+            if (userViewer.notUser()) {
+                System.out.println("※ 로그인 후 이용가능합니다 ※");
+                break;
+            }
+            System.out.println("=======================MENU========================");
             for (MenuDTO m : list) {
                 System.out.printf("%d. %s (최종 수정일: %s)\n", m.getId(), m.getContent(),
                         sdf.format(m.getWrittenDate().getTime()));
-                System.out.println("=====================================================");
-            }
-
-            if (userViewer.notUser()) {
-                System.out.println("로그인 후 이용가능합니다.");
-                break;
+                System.out.println("====================================================");
             }
 
             if (userViewer.isAdmin()) {
@@ -48,12 +48,13 @@ public class MenuViewer {
                     message = new String("수정하실 번호를 입력해주세요");
                     userChoice = ScannerUtil.nextInt(scanner, message);
                     MenuDTO m = controller.selectOne(userChoice);
-                    MenuDTO m2 = controller.selectOneByStoreId(userChoice);
-                    while (m == null || m2 == null) {
+
+                    while (m == null) {
                         message = new String("잘못 입력하셨습니다. 다시 입력해주세요");
                         userChoice = ScannerUtil.nextInt(scanner, message);
                         m = controller.selectOne(userChoice);
                     }
+                    
                     modify(userChoice);
                 }
                 if (userChoice == 3) {
@@ -101,7 +102,8 @@ public class MenuViewer {
         String message = new String("메뉴 내용을 수정해주세요");
         menu.setContent(ScannerUtil.nextLine(scanner, message));
 
-        menu.setWrittenDate(Calendar.getInstance());
+        menu.setWrittenDate(Calendar.getInstance());       
+        
     }
 
     // 삭제

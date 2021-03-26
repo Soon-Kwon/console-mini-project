@@ -2,9 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
-import model.MaterialDTO;
 import model.OrientalDTO;
-import model.WesternDTO;
 
 public class OrientalController {
     private ArrayList<OrientalDTO> list;

@@ -6,11 +6,8 @@ import java.util.Scanner;
 
 import controller.ReplyMaterialController;
 import model.MaterialDTO;
-import model.OrientalDTO;
 import model.ReplyMaterialDTO;
-import model.ReplyOrientalDTO;
 import util.ScannerUtil;
-import controller.ReplyMaterialController;
 
 public class ReplyMaterialViewer {
     private ReplyMaterialController controller;

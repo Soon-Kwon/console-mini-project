@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import controller.ReplyOrientalController;
-import model.MaterialDTO;
 import model.OrientalDTO;
-import model.ReplyMaterialDTO;
 import model.ReplyOrientalDTO;
 import util.ScannerUtil;
 

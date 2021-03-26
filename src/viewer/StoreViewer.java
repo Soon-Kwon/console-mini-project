@@ -12,11 +12,13 @@ public class StoreViewer {
     private Scanner scanner;
     private StoreController controller;
     private UserViewer userViewer;
+    private MenuViewer menuViewer;
 
     // 생성자
     public StoreViewer(UserViewer userViewer) {
         scanner = new Scanner(System.in);
         controller = new StoreController();
+        menuViewer = new MenuViewer(userViewer);
         this.userViewer = userViewer;
     }
 
@@ -25,7 +27,7 @@ public class StoreViewer {
         while (true) {
 
             ArrayList<StoreDTO> list = controller.collectList();
-            System.out.println("========================매장=========================");
+            System.out.println("======================STORE==========================");
             for (StoreDTO s : list) {
                 System.out.printf("%d. %s     %s   %s\n", s.getId(), s.getStoreName(), s.getPhoneNumber(),
                         s.getStoreLocation());
@@ -64,24 +66,23 @@ public class StoreViewer {
     public void printAdminList(int id) {
         while (true) {
             StoreDTO s = controller.selectOne(id);
-            System.out.println("========================매장=========================");
+            System.out.println("======================STORE==========================");
             System.out.printf("%d. %s     %s   %s\n", s.getId(), s.getStoreName(), s.getPhoneNumber(),
                     s.getStoreLocation());
             System.out.println("=====================================================");
-            MenuViewer m = new MenuViewer(userViewer);
             String message = new String("1. 매장 추가하기  2. 매장 수정하기  3. 매장 삭제하기  4. 음식 메뉴 보기  5. 뒤로 가기");
             int userChoice = ScannerUtil.nextInt(scanner, message, 1, 5);
             if (userChoice == 1) {
                 insert();
                 break;
             } else if (userChoice == 2) {               
-                modify(userChoice);
+                modify(id);
                 break;
             } else if (userChoice == 3) {
-                delete(userChoice);
+                delete(id);
                 break;
             } else if (userChoice == 4) {
-                m.printMenuList(s);
+                menuViewer.printMenuList(s);
             } else if (userChoice == 5) {
                 break;
             }
@@ -91,7 +92,7 @@ public class StoreViewer {
     public void printUserList(int id) {
         while (true) {
             StoreDTO s = controller.selectOne(id);
-            System.out.println("========================매장=========================");
+            System.out.println("=======================STORE=========================");
             System.out.printf("%d. %s     %s   %s\n", s.getId(), s.getStoreName(), s.getPhoneNumber(),
                     s.getStoreLocation());
             System.out.println("=====================================================");

@@ -101,6 +101,15 @@ public class UserViewer {
         }
         return false;
     }
+    
+    // logIn 객체로 어드민 판별하기 int반환 버전
+    public int isAdminByInt() {
+        if (logIn.getAdmin() == 0) {
+            return 0;
+        }
+        return 1;    
+    }
+    
 
     // logIn 객체로 유저 판별하기
     public boolean isUser() {

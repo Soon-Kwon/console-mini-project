@@ -24,8 +24,17 @@ public class WesternViewer {
     // 재료 전체
     public void printList() {
         while (true) {
+            System.out.println("--------------------------------------------");
+
+            ArrayList<WesternDTO> list = controller.selectAll();
+            
+            for (WesternDTO w : list) {
+                System.out.printf("%d번 음식: %s\n", w.getId(), w.getName());
+            }
+            System.out.println("--------------------------------------------");
+
             String message;
-            message = new String("1. 메뉴 추가 2. 메뉴 보기 3. 뒤로가기");
+            message = new String("1. 메뉴 추가  2. 개별 보기  3. 뒤로가기");
             int userChoice = ScannerUtil.nextInt(sc, message, 1, 3);
             if (userChoice == 1) {
                 if (userViewer.notUser()) {
@@ -35,13 +44,7 @@ public class WesternViewer {
                     insert();
                 }
             } else if (userChoice == 2) {
-
-                ArrayList<WesternDTO> list = controller.selectAll();
-
-                for (WesternDTO w : list) {
-                    System.out.printf("%d 음식: %s\n", w.getId(), w.getName());
-                }
-
+                System.out.println("--------------------------------------------");
                 message = new String("개별보기할 번호를 선택하시거나 뒤로 가시려면 0을 입력해주세요.");
                 int id = ScannerUtil.nextInt(sc, message);
                 WesternDTO w = controller.selectOne(id);
@@ -67,12 +70,60 @@ public class WesternViewer {
     // 음식 하나하나를 보여주는 목록
     public void printOne(int id) {
         WesternDTO w = controller.selectOne(id);
-        System.out.printf("%s , 100g당 칼로리: %d, 추천수: %d \n", w.getName(), w.getCalori(), w.getScore());
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.printf("[%s], 100g당 칼로리: %dkcal, 추천수: %d \n", w.getName(), w.getCalori(), w.getScore());
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++");
         while (true) {
-            if (userViewer.isAdmin()) {
+            if (userViewer.notUser() || userViewer.isUser()) {
+                String message = new String("1. 수정 및 삭제 2. 댓글 관련 3. 추천하기 4. 뒤로가기.");
+                int userChoice = ScannerUtil.nextInt(sc, message, 1, 4);
+                if (userChoice == 1) {
+                    message = new String("수정하거나 삭제하실거면 비밀번호를 입력해주세요.");
+                    String password = ScannerUtil.nextLine(sc, message);
+                    if (controller.isPasswordChecker(id, password)) {
+                        message = new String("1. 수정  2. 삭제  3. 뒤로가기");
+                        userChoice = ScannerUtil.nextInt(sc, message, 1, 3);
+                        if (userChoice == 1) {
+                            // 수정 메소드
+                            update(id);
+                            printOne(id);
+                        } else if (userChoice == 2) {
+                            w = controller.selectOne(id);
+                            if (w == null) {
+                                System.out.println("삭제할 대상이 없습니다.");
+                                userChoice = ScannerUtil.nextInt(sc, message);
+                                w = controller.selectOne(id);
+                            }
+                            delete(id);// 삭제 끝
+                        } else if (userChoice == 3) {
+
+                        } // 수정 및 삭제
+                    } else {
+                        System.out.println("잘못된 비밀번호입니다.");
+                        System.out.println("메인화면으로 돌아갑니다.");
+                        printList();
+
+                    }
+                } else if (userChoice == 2) {
+                    // 댓글
+                    replyWesternViewer.printList(w);
+
+                } else if (userChoice == 3) {
+                    // 추천수
+                    addScore(id);
+                } else if (userChoice == 4) {
+
+                } else {
+                    ArrayList<WesternDTO> list = controller.selectAll();
+                    for (WesternDTO w1 : list) {
+                        System.out.printf("%d 음식: %s\n", w1.getId(), w1.getName());
+                    }
+                }
+
+            } else if (userViewer.isAdmin()) {
                 String message = new String("1. 삭제 2. 뒤로가기");
                 int userChoice = ScannerUtil.nextInt(sc, message, 1, 2);
-                if(userChoice == 1) {
+                if (userChoice == 1) {
                     w = controller.selectOne(id);
                     if (w == null) {
                         System.out.println("삭제할 대상이 없습니다.");
@@ -80,56 +131,10 @@ public class WesternViewer {
                         w = controller.selectOne(id);
                     }
                     delete(id);// 삭제 끝
-                    printList();
-                }else if(userChoice == 2) {
-                    printList();
+                } else if (userChoice == 2) {
+
                 }
             }
-            String message = new String("1. 수정 및 삭제 2. 댓글 관련 3. 추천하기 4. 뒤로가기.");
-            int userChoice = ScannerUtil.nextInt(sc, message, 1, 4);
-            if (userChoice == 1) {           
-                message = new String("수정하거나 삭제하실거면 비밀번호를 입력해주세요.");
-                String password = ScannerUtil.nextLine(sc, message);
-                if (controller.isPasswordChecker(id, password)) {
-                    message = new String("1. 수정  2. 삭제  3. 뒤로가기");
-                    userChoice = ScannerUtil.nextInt(sc, message, 1, 3);
-                    if (userChoice == 1) {
-                        // 수정 메소드
-                        update(id);
-                        printOne(id);
-                    } else if (userChoice == 2) {
-                        w = controller.selectOne(id);
-                        if (w == null) {
-                            System.out.println("삭제할 대상이 없습니다.");
-                            userChoice = ScannerUtil.nextInt(sc, message);
-                            w = controller.selectOne(id);
-                        }
-                        delete(id);// 삭제 끝
-                    } else if (userChoice == 3) {
-
-                    } // 수정 및 삭제
-                } else {
-                    System.out.println("잘못된 비밀번호입니다.");
-                    System.out.println("메인화면으로 돌아갑니다.");
-                    printList();
-
-                }
-            } else if (userChoice == 2) {
-                // 댓글
-                replyWesternViewer.printList(w);
-
-            } else if (userChoice == 3) {
-                // 추천수
-                addScore(id);
-            } else if (userChoice == 4) {
-
-            } else {
-                ArrayList<WesternDTO> list = controller.selectAll();
-                for (WesternDTO w1 : list) {
-                    System.out.printf("%d 음식: %s\n", w1.getId(), w1.getName());
-                }
-            }
-
             break;
         }
     }
@@ -182,8 +187,8 @@ public class WesternViewer {
             w.setScore(w.getScore() + 1);
             System.out.println("추천되었습니다.");
 
-        }else {
-            
+        } else {
+
             System.out.println("아무 일도 일어나지 않았습니다.");
         }
 

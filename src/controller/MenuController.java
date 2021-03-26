@@ -17,28 +17,28 @@ public class MenuController {
         MenuDTO m = new MenuDTO();
         m.setId(id++);
         m.setStoreId(123456);
-        m.setContent("곱창 1인분: 11000원");
+        m.setContent("한우소곱창대창전골 1인분: 15900원");
         m.setWrittenDate(Calendar.getInstance());
         list.add(m);
         
         m = new MenuDTO();
         m.setId(id++);
         m.setStoreId(567890);
-        m.setContent("된장찌개 6000원");
+        m.setContent("쌀떡볶이 1인분: 3500원");
         m.setWrittenDate(Calendar.getInstance());
         list.add(m);
         
         m = new MenuDTO();
         m.setId(id++);
         m.setStoreId(123456);
-        m.setContent("막창 1인분: 12000원");
+        m.setContent("소고기등심구이 1인분: 12000원");
         m.setWrittenDate(Calendar.getInstance());
         list.add(m);
         
         m = new MenuDTO();
         m.setId(id++);
         m.setStoreId(567890);
-        m.setContent("김치찌개 6000원");
+        m.setContent("버터명란밥 1인분: 7000원");
         m.setWrittenDate(Calendar.getInstance());
         list.add(m);
         

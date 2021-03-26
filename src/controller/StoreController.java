@@ -15,18 +15,18 @@ public class StoreController {
         StoreDTO store = new StoreDTO();
         store.setId(id++);
         store.setStoreId(123456);
-        store.setStoreName("존맛집");
-        store.setPhoneNumber("02-2222-3333");
-        store.setStoreLocation("서울시 강남구 청담동 123-4 ");
+        store.setStoreName("천막집");
+        store.setPhoneNumber("010-7681-2113");
+        store.setStoreLocation("서울시 성북구 보문로 30길 31 1층");
         store.setPassword("1");
         list.add(store);
 
         store = new StoreDTO();
         store.setId(id++);
         store.setStoreId(567890);
-        store.setStoreName("개맛집");
-        store.setPhoneNumber("02-3456-7890");
-        store.setStoreLocation("경기도 이천시 대월면 567-9 ");
+        store.setStoreName("입춘");
+        store.setPhoneNumber("070-7760-0204");
+        store.setStoreLocation("서울시 구로구 디지털로35길 41 1층");
         store.setPassword("2");
         list.add(store);
 
